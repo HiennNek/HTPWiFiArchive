@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTP WiFi Archive</title>
+    <style>
+        /* General Styles */
+        :root {
+            --background-light: #f8f9fa;
+            --background-dark: #121212;
+            --text-light: #495057;
+            --text-dark: #f8f9fa;
+            --primary-color: #00bcd4;
+            --secondary-color: #6c757d;
+            --table-header-bg-light: #00bcd4;
+            --table-header-bg-dark: #1f1f1f;
+            --table-row-bg-light: #ffffff;
+            --table-row-bg-dark: #333333;
+            --border-color-light: #dee2e6;
+            --border-color-dark: #333333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background-light);
+            color: var(--text-light);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        .container {
+            background-color: var(--table-row-bg-light);
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 900px;
+            padding: 20px;
+            margin-top: 40px;
+            animation: fadeIn 1s ease-out;
+            flex-grow: 1;
+            transition: background-color 0.5s ease;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 2em;
+            margin-bottom: 20px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: center;
+            border: 1px solid var(--border-color-light);
+            border-radius: 10px;
+        }
+
+        th {
+            background-color: var(--table-header-bg-light);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background-color: var(--table-row-bg-light);
+        }
+
+        tr:nth-child(odd) {
+            background-color: var(--table-row-bg-light);
+        }
+
+        td {
+            background-color: var(--table-row-bg-light);
+            color: var(--text-light);
+            position: relative;
+        }
+
+        /* Blurred Password */
+        .blurred-text {
+            filter: blur(5px);
+            cursor: pointer;
+            color: var(--secondary-color);
+            transition: filter 0.3s ease, color 0.3s ease, opacity 0.3s ease;
+            display: inline-block;
+        }
+
+        .password-revealed {
+            filter: none;
+            opacity: 1;
+            color: var(--text-light);
+            transition: opacity 0.3s ease;
+        }
+
+        /* Instruction Message */
+        .password-message {
+            display: block;
+            font-size: 0.9em;
+            color: var(--secondary-color);
+            margin-top: 10px;
+            text-align: center;
+            font-style: italic;
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Hover Effect */
+        tr {
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        tr:hover {
+            background-color: #e0f7fa;
+            transform: scale(1.02);
+        }
+
+        /* Footer Styling */
+        footer {
+            text-align: center;
+            font-size: 0.9em;
+            margin-top: 20px;
+            color: var(--secondary-color);
+        }
+
+        footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            .container {
+                width: 90%;
+            }
+            th, td {
+                padding: 10px;
+            }
+        }
+
+        /* Dark Mode Specific Styles */
+        body.dark-mode {
+            background-color: var(--background-dark);
+            color: var(--text-dark);
+        }
+
+        body.dark-mode .container {
+            background-color: var(--table-row-bg-dark);
+        }
+
+        body.dark-mode th {
+            background-color: #0288d1; /* Blue top row in dark mode */
+        }
+
+        body.dark-mode td {
+            background-color: var(--table-row-bg-dark);
+            color: var(--text-dark);
+        }
+
+        body.dark-mode .blurred-text {
+            color: var(--secondary-color);
+        }
+
+        /* Dark mode toggle button */
+        .dark-mode-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        .dark-mode-button:hover {
+            background-color: #00acc1;
+        }
+
+        /* For when dark mode is active */
+        body.dark-mode .dark-mode-button {
+            background-color: #0288d1;
+        }
+
+        /* Ensuring all input elements and tables are styled in dark mode */
+        body.dark-mode input, body.dark-mode select, body.dark-mode button {
+            background-color: #333;
+            color: white;
+            border: 1px solid #444;
+        }
+
+        /* Ensuring all links and text in dark mode are appropriately styled */
+        body.dark-mode a {
+            color: var(--primary-color);
+        }
+
+        body.dark-mode a:hover {
+            color: var(--secondary-color);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Dark Mode Toggle Button -->
+    <button class="dark-mode-button" id="dark-mode-toggle">🌙</button>
+
+    <div class="container">
+        <h1>HTP WiFi Archive</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Access Point</th>
+                    <th>Password Key</th>
+                    <th>Update Lần Cuối</th>
+                </tr>
+            </thead>
+            <tbody id="wifi-table-body">
+                <!-- Dynamic rows will be inserted here -->
+            </tbody>
+        </table>
+
+        <p id="password-instruction" class="password-message">Click vào password để hiển thị</p>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>Cracked & developed by <a href="#" target="">DanhHien</a></p>
+    </footer>
+
+    <script>
+        // Array to store Wi-Fi information
+        const wifiData = [
+            { accessPoint: 'Giao-Vien', password: 'htp@1234$', lastUpdate: '09-10-2024' },
+            { accessPoint: 'Hoi-Truong', password: 'htp@1234$', lastUpdate: '09-10-2024' },
+            { accessPoint: 'Phong-Y-Te', password: 'hoilamgi', lastUpdate: '09-10-2024' },
+            { accessPoint: 'HP Chuyen Mon', password: '0908081046', lastUpdate: '09-10-2024' },
+            { accessPoint: 'Thu-Vien', password: '12346789', lastUpdate: '09-10-2024' },
+            { accessPoint: 'Tin 1', password: 'tin1@1234$', lastUpdate: '09-10-2024' },
+            { accessPoint: 'HTP', password: 'htp123456', lastUpdate: '09-10-2024' }
+        ];
+
+        function loadTableData() {
+            const tableBody = document.getElementById('wifi-table-body');
+            wifiData.forEach((wifi, index) => {
+                const row = `
+                    <tr>
+                        <td>${wifi.accessPoint}</td>
+                        <td>
+                            <span class="blurred-text" id="password-${index}" onclick="togglePasswordVisibility(${index})">${wifi.password}</span>
+                        </td>
+                        <td>${wifi.lastUpdate}</td>
+                    </tr>
+                `;
+                tableBody.innerHTML += row;
+            });
+        }
+
+        // Toggle Password Visibility
+        function togglePasswordVisibility(index) {
+            const passwordElement = document.getElementById(`password-${index}`);
+            passwordElement.classList.toggle('password-revealed');
+        }
+
+        // Dark Mode Toggle
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+        darkModeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            darkModeToggle.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+        });
+
+        // Initial load
+        loadTableData();
+    </script>
+</body>
+</html>
