@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HTP WiFi Archive</title>
     <style>
-        /* General Styles */
         :root {
             --background-light: #f8f9fa;
             --background-dark: #121212;
@@ -92,7 +91,6 @@
             position: relative;
         }
 
-        /* Blurred Password */
         .blurred-text {
             filter: blur(5px);
             cursor: pointer;
@@ -108,7 +106,6 @@
             transition: opacity 0.3s ease;
         }
 
-        /* Instruction Message */
         .password-message {
             display: block;
             font-size: 0.9em;
@@ -118,7 +115,6 @@
             font-style: italic;
         }
 
-        /* Animation */
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -130,7 +126,6 @@
             }
         }
 
-        /* Hover Effect */
         tr {
             transition: background-color 0.3s ease, transform 0.3s ease;
         }
@@ -140,7 +135,6 @@
             transform: scale(1.02);
         }
 
-        /* Footer Styling */
         footer {
             text-align: center;
             font-size: 0.9em;
@@ -154,7 +148,6 @@
             font-weight: bold;
         }
 
-        /* Responsive Design */
         @media screen and (max-width: 768px) {
             .container {
                 width: 90%;
@@ -164,7 +157,6 @@
             }
         }
 
-        /* Dark Mode Specific Styles */
         body.dark-mode {
             background-color: var(--background-dark);
             color: var(--text-dark);
@@ -175,7 +167,7 @@
         }
 
         body.dark-mode th {
-            background-color: #0288d1; /* Blue top row in dark mode */
+            background-color: #0288d1;
         }
 
         body.dark-mode td {
@@ -187,7 +179,6 @@
             color: var(--secondary-color);
         }
 
-        /* Dark mode toggle button */
         .dark-mode-button {
             position: absolute;
             top: 20px;
@@ -207,19 +198,16 @@
             background-color: #00acc1;
         }
 
-        /* For when dark mode is active */
         body.dark-mode .dark-mode-button {
             background-color: #0288d1;
         }
 
-        /* Ensuring all input elements and tables are styled in dark mode */
         body.dark-mode input, body.dark-mode select, body.dark-mode button {
             background-color: #333;
             color: white;
             border: 1px solid #444;
         }
 
-        /* Ensuring all links and text in dark mode are appropriately styled */
         body.dark-mode a {
             color: var(--primary-color);
         }
@@ -231,7 +219,6 @@
 </head>
 <body>
 
-    <!-- Dark Mode Toggle Button -->
     <button class="dark-mode-button" id="dark-mode-toggle">🌙</button>
 
     <div class="container">
@@ -245,7 +232,6 @@
                 </tr>
             </thead>
             <tbody id="wifi-table-body">
-                <!-- Dynamic rows will be inserted here -->
             </tbody>
         </table>
 
@@ -256,7 +242,6 @@
         <p id="password-instruction" class="password-message">***AP "Thu" hình như dùng chung modem với phòng hội trường</p>
     </div>
 
-    <!-- Footer -->
     <footer>
         <p>Cracked & developed by <a href="#" target="">DanhHien</a></p>
         <a href="https://github.com/hhienuwu/HTPWiFiArchive.git" target="_blank">Go to Github page</a> 
@@ -264,7 +249,6 @@
     </footer>
 
     <script>
-        // Array to store Wi-Fi information
         const wifiData = [
             { accessPoint: 'Giao-Vien', password: 'htp@1234$', lastUpdate: '04-03-2025' },
             { accessPoint: 'Hoi-Truong', password: 'htp@1234$', lastUpdate: '04-03-2025' },
@@ -292,20 +276,17 @@
             });
         }
 
-        // Toggle Password Visibility
         function togglePasswordVisibility(index) {
             const passwordElement = document.getElementById(`password-${index}`);
             passwordElement.classList.toggle('password-revealed');
         }
 
-        // Dark Mode Toggle
         const darkModeToggle = document.getElementById('dark-mode-toggle');
         darkModeToggle.addEventListener('click', () => {
             document.body.classList.toggle('dark-mode');
             darkModeToggle.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
         });
 
-        // Initial load
         loadTableData();
     </script>
 </body>
